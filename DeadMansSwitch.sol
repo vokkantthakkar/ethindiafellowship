@@ -11,7 +11,7 @@ contract DeadMansSwitch{
     uint amount ;
     
     
-    function () payable external {
+    function () payable external onlyAdmin {
     }
     
     modifier onlyAdmin() {
@@ -32,13 +32,9 @@ contract DeadMansSwitch{
 
     function StillAlive() public onlyAdmin {}
     
-    function process() public {
-        require(block.number <= currentblocknumber + 10) ;
+    function process() public onlyReceiver {
+        require(block.number >= currentblocknumber + 10) ;
         
         selfdestruct(receiver) ;
     }
-    
-    
- 
-    
 }
